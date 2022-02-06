@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:rxdart_example/api/models/ticker.dart';
+import 'package:rxdart_example/models/ticker.dart';
 import 'package:rxdart_example/services/ticker_service.dart';
 
 import 'base_cubit.dart';
@@ -32,7 +32,11 @@ class MainPageCubit extends BaseCubit<MainPageState> {
   Future<void> init() async {
     await makeErrorHandledCall(() async {
       final tickers = await _tickerService.getTickers();
-      state.tickers.sink.add(tickers);
+      state.tickers.sink.add(
+        tickers.map((e) {
+          return Ticker.fromTickerDto(e);
+        }).toList(),
+      );
     });
   }
 }

@@ -16,19 +16,19 @@ class _ApiClient implements ApiClient {
   String? baseUrl;
 
   @override
-  Future<List<Ticker>> getTickers() async {
+  Future<List<TickerDto>> getTickers() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<List<dynamic>>(
-        _setStreamType<List<Ticker>>(
+        _setStreamType<List<TickerDto>>(
             Options(method: 'GET', headers: _headers, extra: _extra)
                 .compose(_dio.options, '/ticker',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     var value = _result.data!
-        .map((dynamic i) => Ticker.fromJson(i as Map<String, dynamic>))
+        .map((dynamic i) => TickerDto.fromJson(i as Map<String, dynamic>))
         .toList();
     return value;
   }

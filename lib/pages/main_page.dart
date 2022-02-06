@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rxdart_example/api/models/ticker.dart';
+import 'package:rxdart_example/models/ticker.dart';
 import 'package:rxdart_example/bloc/main_page_cubit.dart';
 import 'package:rxdart_example/di/di.dart';
 
@@ -25,9 +25,9 @@ class MainPage extends StatelessWidget {
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 return ListView(
-                  children: snapshot.data?.map((e) {
-                        return Text(e.name);
-                      }).toList() ??
+                  children: snapshot.data
+                          ?.map((e) => e.getWidget(context))
+                          .toList() ??
                       [],
                 );
               } else if (snapshot.hasError) {

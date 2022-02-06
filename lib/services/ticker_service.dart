@@ -1,6 +1,6 @@
 import 'package:injectable/injectable.dart';
 import 'package:rxdart_example/api/api_client.dart';
-import 'package:rxdart_example/api/models/ticker.dart';
+import 'package:rxdart_example/api/models/ticker_dto.dart';
 
 import 'base_service.dart';
 
@@ -10,7 +10,7 @@ class TickerService extends BaseService {
 
   TickerService(this._apiClient);
 
-  Future<List<Ticker>> getTickers() async {
+  Future<List<TickerDto>> getTickers() async {
     return await makeErrorParsedCall(() async {
       return await _apiClient.getTickers();
     });
