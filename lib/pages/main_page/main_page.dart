@@ -1,45 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rxdart_example/bloc/main_page_cubit/main_page_cubit.dart';
+import 'package:rxdart_example/di/di.dart';
 
-class MainPage extends StatefulWidget {
-  const MainPage({Key? key}) : super(key: key);
-
-  @override
-  State<MainPage> createState() => _MainPageState();
-}
-
-class _MainPageState extends State<MainPage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
+class MainPage extends StatelessWidget {
+  static Widget create() {
+    return BlocProvider(
+      create: (_) => locator.get<MainPageCubit>(),
+      child: const MainPage(),
+    );
   }
+
+  const MainPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('widget.title'),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
+      appBar: AppBar(),
+      body: BlocBuilder<MainPageCubit, MainPageState>(
+        builder: (context, state) {
+          if (state.status == MainPageStatus.success) {
+            return ListView(
+              children: state.tickers.map((e) {
+                return Text(e.name);
+              }).toList(),
+            );
+          } else {
+            return const CircleAvatar();
+          }
+        },
       ),
     );
   }
