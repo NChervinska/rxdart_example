@@ -33,22 +33,20 @@ class Ticker extends Equatable {
 
 extension TickerExt on Ticker {
   Widget getWidget(BuildContext context) {
-    return Expanded(
-      child: Column(
-        children: [
-          const Divider(),
-          Text(symbol),
-          const SizedBox(height: 16),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Text(name),
-              Text(supply.toString()),
-            ],
-          ),
-          const SizedBox(height: 16),
-        ],
-      ),
+    return Column(
+      children: [
+        const Divider(),
+        Text(symbol),
+        const SizedBox(height: 16),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Text(name),
+            Text(supply.toString()),
+          ],
+        ),
+        const SizedBox(height: 16),
+      ],
     );
   }
 }

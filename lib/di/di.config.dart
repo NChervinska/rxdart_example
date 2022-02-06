@@ -9,9 +9,10 @@ import 'package:get_it/get_it.dart' as _i1;
 import 'package:injectable/injectable.dart' as _i2;
 
 import '../api/api_client.dart' as _i4;
-import '../bloc/main_page_cubit.dart' as _i6;
+import '../bloc/main_page_cubit/main_page_cubit.dart' as _i6;
+import '../bloc/search_page_cubit/search_page_cubit.dart' as _i7;
 import '../services/ticker_service.dart' as _i5;
-import 'modules/api_module.dart' as _i7; // ignore_for_file: unnecessary_lambdas
+import 'modules/api_module.dart' as _i8; // ignore_for_file: unnecessary_lambdas
 
 // ignore_for_file: lines_longer_than_80_chars
 /// initializes the registration of provided dependencies inside of [GetIt]
@@ -24,7 +25,9 @@ _i1.GetIt $initGetIt(_i1.GetIt get,
   gh.factory<_i5.TickerService>(() => _i5.TickerService(get<_i4.ApiClient>()));
   gh.factory<_i6.MainPageCubit>(
       () => _i6.MainPageCubit(get<_i5.TickerService>()));
+  gh.factory<_i7.SearchPageCubit>(
+      () => _i7.SearchPageCubit(get<_i5.TickerService>()));
   return get;
 }
 
-class _$ApiModule extends _i7.ApiModule {}
+class _$ApiModule extends _i8.ApiModule {}
