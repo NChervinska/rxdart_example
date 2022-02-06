@@ -2,7 +2,6 @@ import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
-import 'package:rxdart_example/api/models/api_error.dart';
 
 abstract class BaseService {
   Future<T> makeErrorParsedCall<T>(AsyncValueGetter<T> callback) async {
@@ -34,10 +33,7 @@ abstract class BaseService {
       if (response == null) {
         return unknownApiException;
       }
-      final apiError = ApiError.fromJson(response);
-      return Exception(
-        [apiError.error],
-      );
+      return Exception([response['error']]);
     } catch (_) {
       return unknownApiException;
     }

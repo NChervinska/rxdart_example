@@ -9,9 +9,7 @@ part 'person.g.dart';
 class Person extends Equatable {
   final String id;
   final String name;
-  @JsonKey(
-    name: 'teams_count',
-  )
+  @JsonKey(name: 'teams_count')
   final int cout;
 
   const Person({
@@ -36,10 +34,10 @@ extension PersonExt on Person {
   Widget getWidget(BuildContext context) {
     return Column(
       children: [
-        const Divider(),
         const SizedBox(height: 16),
         Text(name),
         const SizedBox(height: 16),
+        const Divider(),
       ],
     );
   }

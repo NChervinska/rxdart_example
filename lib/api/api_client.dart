@@ -19,6 +19,6 @@ abstract class ApiClient {
   @GET('/search')
   Future<People> getPeople(
     @Query('q') String query, {
-    @Query('c') String q = 'people',
+    @Query('c') String q = ApiConstants.filter,
   });
 }

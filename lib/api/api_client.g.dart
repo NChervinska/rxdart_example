@@ -34,7 +34,7 @@ class _ApiClient implements ApiClient {
   }
 
   @override
-  Future<People> getPeople(query, {q = 'people'}) async {
+  Future<People> getPeople(query, {q = ApiConstants.filter}) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{r'q': query, r'c': q};
     final _headers = <String, dynamic>{};

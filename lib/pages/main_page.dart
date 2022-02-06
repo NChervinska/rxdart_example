@@ -25,11 +25,12 @@ class MainPage extends StatelessWidget {
             stream: state.tickers.stream,
             builder: (context, snapshot) {
               if (snapshot.hasData) {
-                return ListView(
-                  children: snapshot.data
-                          ?.map((e) => e.getWidget(context))
-                          .toList() ??
-                      [],
+                return ListView.builder(
+                  itemBuilder: (context, index) {
+                    return snapshot.data?[index].getWidget(context, index) ??
+                        const SizedBox.shrink();
+                  },
+                  itemCount: snapshot.data?.length,
                 );
               } else if (snapshot.hasError) {
                 return Text(snapshot.error.toString());

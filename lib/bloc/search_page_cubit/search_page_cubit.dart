@@ -12,10 +12,7 @@ part 'search_page_state.dart';
 class SearchPageCubit extends BaseCubit<SearchPageState> {
   final TickerService _tickerService;
 
-  SearchPageCubit(this._tickerService)
-      : super(
-          const SearchPageState(),
-        );
+  SearchPageCubit(this._tickerService) : super(const SearchPageState());
 
   @override
   void handleError(String errorMessage) {
@@ -26,6 +23,8 @@ class SearchPageCubit extends BaseCubit<SearchPageState> {
   }
 
   Future<void> search(String query) async {
+    if (query.trim().isEmpty) return;
+
     await makeErrorHandledCall(() async {
       emit(state.copyWith(
         status: SearchPageStatus.loading,

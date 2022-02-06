@@ -30,7 +30,7 @@ class _SearchPageState extends State<SearchPage> {
   void initState() {
     super.initState();
     _subject.stream
-        .debounce((_) => TimerStream(_, const Duration(milliseconds: 200)))
+        .debounce((_) => TimerStream(_, const Duration(seconds: 1)))
         .listen(getCubit.search);
   }
 
@@ -46,22 +46,22 @@ class _SearchPageState extends State<SearchPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        actions: [
-          Expanded(
-            child: TextField(
-              onChanged: _subject.add,
-            ),
+        title: Expanded(
+          child: TextField(
+            onChanged: _subject.add,
           ),
-        ],
+        ),
       ),
       body: BlocBuilder<SearchPageCubit, SearchPageState>(
         builder: (context, state) {
           switch (state.status) {
             case SearchPageStatus.success:
-              return ListView(
-                  children: state.people.map((person) {
-                return person.getWidget(context);
-              }).toList());
+              return ListView.builder(
+                itemBuilder: (context, index) {
+                  return state.people[index].getWidget(context);
+                },
+                itemCount: state.people.length,
+              );
             case SearchPageStatus.error:
               return Center(child: Text(state.error));
             case SearchPageStatus.loading:
