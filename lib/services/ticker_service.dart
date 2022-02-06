@@ -2,7 +2,7 @@ import 'package:injectable/injectable.dart';
 import 'package:rxdart_example/api/api_client.dart';
 import 'package:rxdart_example/api/models/ticker.dart';
 
-import 'core/base_service.dart';
+import 'base_service.dart';
 
 @injectable
 class TickerService extends BaseService {

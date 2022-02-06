@@ -3,8 +3,6 @@ import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:rxdart_example/api/models/api_error.dart';
-import 'package:rxdart_example/exception/api_exception.dart';
-import 'package:rxdart_example/resources/app_strings.dart';
 
 abstract class BaseService {
   Future<T> makeErrorParsedCall<T>(AsyncValueGetter<T> callback) async {
@@ -12,26 +10,24 @@ abstract class BaseService {
       return await callback();
     } on DioError catch (exception) {
       throw await _getProccessedDioError(exception);
-    } on ApiException {
+    } on Exception {
       rethrow;
     } catch (exception, stackTrace) {
       log(
-        AppStrings.errorString,
+        'BaseService Error',
         name: 'BaseService Error',
         error: exception,
         stackTrace: stackTrace,
       );
 
-      throw Exception(AppStrings.errorString);
+      throw Exception(exception);
     }
   }
 
-  Future<ApiException> _getProccessedDioError(
+  Future<Exception> _getProccessedDioError(
     DioError exception,
   ) async {
-    const unknownApiException = ApiException(
-      message: AppStrings.errorString,
-    );
+    final unknownApiException = Exception([exception.message]);
 
     try {
       final response = exception.response?.data;
@@ -39,8 +35,8 @@ abstract class BaseService {
         return unknownApiException;
       }
       final apiError = ApiError.fromJson(response);
-      return ApiException(
-        message: apiError.error,
+      return Exception(
+        [apiError.error],
       );
     } catch (_) {
       return unknownApiException;

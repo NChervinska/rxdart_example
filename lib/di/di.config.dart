@@ -9,7 +9,7 @@ import 'package:get_it/get_it.dart' as _i1;
 import 'package:injectable/injectable.dart' as _i2;
 
 import '../api/api_client.dart' as _i4;
-import '../bloc/main_page_cubit/main_page_cubit.dart' as _i6;
+import '../bloc/main_page_cubit.dart' as _i6;
 import '../services/ticker_service.dart' as _i5;
 import 'modules/api_module.dart' as _i7; // ignore_for_file: unnecessary_lambdas
 

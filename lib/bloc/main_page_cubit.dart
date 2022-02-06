@@ -4,7 +4,7 @@ import 'package:rxdart/rxdart.dart';
 import 'package:rxdart_example/api/models/ticker.dart';
 import 'package:rxdart_example/services/ticker_service.dart';
 
-import '../base_cubit.dart';
+import 'base_cubit.dart';
 
 class MainPageState implements Equatable {
   final BehaviorSubject<List<Ticker>> tickers = BehaviorSubject<List<Ticker>>();

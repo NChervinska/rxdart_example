@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rxdart_example/api/models/ticker.dart';
-import 'package:rxdart_example/bloc/main_page_cubit/main_page_cubit.dart';
+import 'package:rxdart_example/bloc/main_page_cubit.dart';
 import 'package:rxdart_example/di/di.dart';
 
 class MainPage extends StatelessWidget {
