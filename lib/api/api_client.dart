@@ -12,6 +12,6 @@ abstract class ApiClient {
     String baseUrl,
   }) = _ApiClient;
 
-  @GET("/ticker")
+  @GET('/ticker')
   Future<List<Ticker>> getTickers();
 }
