@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:provider/provider.dart';
+import 'package:rxdart_example/bloc/main_page_bloc/main_page_bloc.dart';
 import 'package:rxdart_example/models/ticker.dart';
-import 'package:rxdart_example/bloc/main_page_cubit/main_page_cubit.dart';
 import 'package:rxdart_example/di/di.dart';
 import 'package:rxdart_example/pages/search_page.dart';
 
 class MainPage extends StatelessWidget {
   static Widget create() {
-    return BlocProvider(
-      create: (_) => locator.get<MainPageCubit>(),
+    return Provider(
+      create: (_) => locator.get<MainPageBloc>()..init(),
       child: const MainPage._(),
     );
   }
@@ -17,30 +17,27 @@ class MainPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final mainCubit = Provider.of<MainPageBloc>(context);
     return Scaffold(
       appBar: AppBar(),
-      body: BlocBuilder<MainPageCubit, MainPageState>(
-        builder: (context, state) {
-          return StreamBuilder<List<Ticker>>(
-            stream: state.tickers.stream,
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                return ListView.builder(
-                  itemBuilder: (context, index) {
-                    return snapshot.data?[index].getWidget(context, index) ??
-                        const SizedBox.shrink();
-                  },
-                  itemCount: snapshot.data?.length,
-                );
-              } else if (snapshot.hasError) {
-                return Text(snapshot.error.toString());
-              } else {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
-            },
-          );
+      body: StreamBuilder<List<Ticker>>(
+        stream: mainCubit.behaviorSubject.stream,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return ListView.builder(
+              itemBuilder: (context, index) {
+                return snapshot.data?[index].getWidget(context, index) ??
+                    const SizedBox.shrink();
+              },
+              itemCount: snapshot.data?.length,
+            );
+          } else if (snapshot.hasError) {
+            return Text(snapshot.error.toString());
+          } else {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
         },
       ),
       floatingActionButton: IconButton(
