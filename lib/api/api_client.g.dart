@@ -34,9 +34,13 @@ class _ApiClient implements ApiClient {
   }
 
   @override
-  Future<People> getPeople(query, {q = ApiConstants.filter}) async {
+  Future<People> getPeople(query, {q = ApiConstants.filter, limit = 25}) async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{r'q': query, r'c': q};
+    final queryParameters = <String, dynamic>{
+      r'q': query,
+      r'c': q,
+      r'limit': limit
+    };
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     final _result = await _dio.fetch<Map<String, dynamic>>(

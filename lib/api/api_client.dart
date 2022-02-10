@@ -20,5 +20,6 @@ abstract class ApiClient {
   Future<People> getPeople(
     @Query('q') String query, {
     @Query('c') String q = ApiConstants.filter,
+    @Query('limit') int limit = 25,
   });
 }
