@@ -5,7 +5,7 @@ import 'package:rxdart_example/models/ticker.dart';
 import 'package:rxdart_example/di/di.dart';
 import 'package:rxdart_example/pages/search_page.dart';
 
-class MainPage extends StatelessWidget {
+class MainPage extends StatefulWidget {
   static Widget create() {
     return Provider(
       create: (_) => locator.get<MainPageBloc>()..init(),
@@ -16,12 +16,25 @@ class MainPage extends StatelessWidget {
   const MainPage._({Key? key}) : super(key: key);
 
   @override
+  State<MainPage> createState() => _MainPageState();
+}
+
+class _MainPageState extends State<MainPage> {
+  late final MainPageBloc mainPageBloc;
+
+  @override
+  void dispose() {
+    mainPageBloc.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final mainCubit = Provider.of<MainPageBloc>(context);
+    final mainPageBloc = Provider.of<MainPageBloc>(context);
     return Scaffold(
       appBar: AppBar(),
       body: StreamBuilder<List<Ticker>>(
-        stream: mainCubit.behaviorSubject.stream,
+        stream: mainPageBloc.behaviorSubject.stream,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return ListView.builder(
