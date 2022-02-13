@@ -2,7 +2,7 @@ import 'package:retrofit/retrofit.dart';
 import 'package:dio/dio.dart';
 import 'package:rxdart_example/api/api_constants.dart';
 import 'package:rxdart_example/api/models/people.dart';
-import 'package:rxdart_example/api/models/ticker_dto.dart';
+import 'package:rxdart_example/models/ticker.dart';
 
 part 'api_client.g.dart';
 
@@ -14,7 +14,7 @@ abstract class ApiClient {
   }) = _ApiClient;
 
   @GET('/ticker')
-  Future<List<TickerDto>> getTickers();
+  Future<List<Ticker>> getTickers();
 
   @GET('/search')
   Future<People> getPeople(

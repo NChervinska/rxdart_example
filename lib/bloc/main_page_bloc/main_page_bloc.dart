@@ -13,11 +13,7 @@ class MainPageBloc {
 
   Future<void> init() async {
     final tickers = await _tickerService.getTickers();
-    behaviorSubject.sink.add(
-      tickers.map((e) {
-        return Ticker.fromTickerDto(e);
-      }).toList(),
-    );
+    behaviorSubject.sink.add(tickers);
   }
 
   dispose() {

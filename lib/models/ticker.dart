@@ -1,33 +1,43 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
-import 'package:rxdart_example/api/models/ticker_dto.dart';
+import 'package:json_annotation/json_annotation.dart';
+import 'package:rxdart_example/utils/json_utils.dart';
 
+part 'ticker.g.dart';
+
+@immutable
+@JsonSerializable()
 class Ticker extends Equatable {
+  final String id;
   final String name;
   final String symbol;
-  final int supply;
+  @JsonKey(
+    name: 'max_supply',
+    fromJson: intFromJson,
+  )
+  final int maxSupply;
 
   const Ticker({
+    required this.id,
     required this.name,
     required this.symbol,
-    required this.supply,
+    required this.maxSupply,
   });
 
-  factory Ticker.fromTickerDto(TickerDto tickerDto) {
-    final supply = tickerDto.maxSupply +
-        tickerDto.circulatingSupply +
-        tickerDto.totalSupply;
-
-    return Ticker(
-      name: tickerDto.name,
-      symbol: tickerDto.symbol,
-      supply: supply ~/ 3,
-    );
+  factory Ticker.fromJson(Map<String, dynamic> json) {
+    return _$TickerFromJson(json);
   }
+
+  Map<String, dynamic> toJson() => _$TickerToJson(this);
 
   @override
   List<Object> get props {
-    return [symbol, name, supply];
+    return [
+      id,
+      name,
+      symbol,
+      maxSupply,
+    ];
   }
 }
 
@@ -42,7 +52,7 @@ extension TickerExt on Ticker {
           children: [
             Text(index.toString()),
             Text(name),
-            Text(supply.toString()),
+            Text(maxSupply.toString()),
           ],
         ),
         const SizedBox(height: 16),
