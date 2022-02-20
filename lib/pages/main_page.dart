@@ -5,7 +5,7 @@ import 'package:rxdart_example/models/ticker.dart';
 import 'package:rxdart_example/di/di.dart';
 import 'package:rxdart_example/pages/search_page.dart';
 
-class MainPage extends StatefulWidget {
+class MainPage extends StatelessWidget {
   static Widget create() {
     return Provider(
       create: (_) => locator.get<MainPageBloc>()..init(),
@@ -14,19 +14,6 @@ class MainPage extends StatefulWidget {
   }
 
   const MainPage._({Key? key}) : super(key: key);
-
-  @override
-  State<MainPage> createState() => _MainPageState();
-}
-
-class _MainPageState extends State<MainPage> {
-  late final MainPageBloc mainPageBloc;
-
-  @override
-  void dispose() {
-    mainPageBloc.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {

@@ -46,11 +46,7 @@ class _SearchPageState extends State<SearchPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Expanded(
-          child: TextField(
-            onChanged: _subject.add,
-          ),
-        ),
+        title: TextField(onChanged: _subject.add),
       ),
       body: BlocBuilder<SearchPageCubit, SearchPageState>(
         builder: (context, state) {
