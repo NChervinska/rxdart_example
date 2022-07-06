@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:rxdart_example/bloc/main_page_bloc/main_page_bloc.dart';
-import 'package:rxdart_example/models/ticker.dart';
 import 'package:rxdart_example/di/di.dart';
+import 'package:rxdart_example/models/ticker.dart';
 import 'package:rxdart_example/pages/search_page.dart';
 
 class MainPage extends StatelessWidget {
@@ -23,29 +23,45 @@ class MainPage extends StatelessWidget {
       body: StreamBuilder<List<Ticker>>(
         stream: mainPageBloc.behaviorSubject.stream,
         builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            return ListView.builder(
-              itemBuilder: (context, index) {
-                return snapshot.data?[index].getWidget(context, index) ??
-                    const SizedBox.shrink();
-              },
-              itemCount: snapshot.data?.length,
-            );
-          } else if (snapshot.hasError) {
-            return Text(snapshot.error.toString());
-          } else {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
+          if (snapshot.hasError) return Text(snapshot.error.toString());
+
+          if (!snapshot.hasData) {
+            return const Center(child: CircularProgressIndicator());
           }
+
+          return ListView.builder(
+            itemBuilder: (context, index) {
+              return _buildTicker(snapshot.data?[index], index);
+            },
+            itemCount: snapshot.data?.length,
+          );
         },
       ),
       floatingActionButton: IconButton(
         icon: const Icon(Icons.search),
-        onPressed: () {
-          Navigator.of(context).push(SearchPage.getRoute());
-        },
+        onPressed: () => Navigator.of(context).push(SearchPage.getRoute()),
       ),
+    );
+  }
+
+  Widget _buildTicker(Ticker? ticker, int index) {
+    if (ticker == null) return const SizedBox.shrink();
+
+    return Column(
+      children: [
+        Text(ticker.symbol),
+        const SizedBox(height: 16),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Text(index.toString()),
+            Text(ticker.name),
+            Text(ticker.maxSupply.toString()),
+          ],
+        ),
+        const SizedBox(height: 16),
+        const Divider(),
+      ],
     );
   }
 }

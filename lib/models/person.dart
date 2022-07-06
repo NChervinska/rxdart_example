@@ -29,16 +29,3 @@ class Person extends Equatable {
     return [id, name, cout];
   }
 }
-
-extension PersonExt on Person {
-  Widget getWidget(BuildContext context) {
-    return Column(
-      children: [
-        const SizedBox(height: 16),
-        Text(name),
-        const SizedBox(height: 16),
-        const Divider(),
-      ],
-    );
-  }
-}

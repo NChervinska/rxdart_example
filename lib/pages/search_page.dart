@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:rxdart_example/bloc/search_page_cubit/search_page_cubit.dart';
-import 'package:rxdart_example/models/person.dart';
 import 'package:rxdart_example/di/di.dart';
 
 class SearchPage extends StatefulWidget {
@@ -45,24 +44,29 @@ class _SearchPageState extends State<SearchPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: TextField(onChanged: _subject.add),
-      ),
+      appBar: AppBar(title: TextField(onChanged: _subject.add)),
       body: BlocBuilder<SearchPageCubit, SearchPageState>(
         builder: (context, state) {
           switch (state.status) {
+            case SearchPageStatus.error:
+              return Center(child: Text(state.error));
+
+            case SearchPageStatus.loading:
+              return const Center(child: CircularProgressIndicator());
+
             case SearchPageStatus.success:
               return ListView.builder(
                 itemBuilder: (context, index) {
-                  return state.people[index].getWidget(context);
+                  return Column(
+                    children: [
+                      const SizedBox(height: 16),
+                      Text(state.people[index].name),
+                      const SizedBox(height: 16),
+                      const Divider(),
+                    ],
+                  );
                 },
                 itemCount: state.people.length,
-              );
-            case SearchPageStatus.error:
-              return Center(child: Text(state.error));
-            case SearchPageStatus.loading:
-              return const Center(
-                child: CircularProgressIndicator(),
               );
           }
         },
