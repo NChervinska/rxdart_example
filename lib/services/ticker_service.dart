@@ -1,6 +1,6 @@
 import 'package:injectable/injectable.dart';
 import 'package:rxdart_example/api/api_client.dart';
-import 'package:rxdart_example/api/models/people.dart';
+import 'package:rxdart_example/models/people.dart';
 import 'package:rxdart_example/models/ticker.dart';
 
 import 'base_service.dart';

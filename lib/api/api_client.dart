@@ -1,7 +1,7 @@
 import 'package:retrofit/retrofit.dart';
 import 'package:dio/dio.dart';
 import 'package:rxdart_example/api/api_constants.dart';
-import 'package:rxdart_example/api/models/people.dart';
+import 'package:rxdart_example/models/people.dart';
 import 'package:rxdart_example/models/ticker.dart';
 
 part 'api_client.g.dart';
