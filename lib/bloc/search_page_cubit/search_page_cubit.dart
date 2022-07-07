@@ -1,6 +1,5 @@
 import 'package:equatable/equatable.dart';
 import 'package:injectable/injectable.dart';
-
 import 'package:rxdart_example/models/person.dart';
 import 'package:rxdart_example/services/ticker_service.dart';
 
