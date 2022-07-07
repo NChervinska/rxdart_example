@@ -25,7 +25,5 @@ class Person extends Equatable {
   Map<String, dynamic> toJson() => _$PersonToJson(this);
 
   @override
-  List<Object> get props {
-    return [id, name, cout];
-  }
+  List<Object> get props => [id, name, cout];
 }

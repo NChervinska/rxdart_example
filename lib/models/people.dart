@@ -10,9 +10,7 @@ part 'people.g.dart';
 class People extends Equatable {
   final List<Person> people;
 
-  const People({
-    required this.people,
-  });
+  const People({required this.people});
 
   factory People.fromJson(Map<String, dynamic> json) {
     return _$PeopleFromJson(json);
@@ -21,7 +19,5 @@ class People extends Equatable {
   Map<String, dynamic> toJson() => _$PeopleToJson(this);
 
   @override
-  List<Object> get props {
-    return [people];
-  }
+  List<Object> get props => [people];
 }

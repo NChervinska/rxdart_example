@@ -9,9 +9,6 @@ class RxDartApp extends StatelessWidget {
     return MaterialApp(
       home: MainPage.create(),
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
     );
   }
 }
