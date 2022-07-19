@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:equatable/equatable.dart';
 import 'package:injectable/injectable.dart';
 import 'package:rxdart_example/models/person.dart';
@@ -25,10 +27,9 @@ class SearchPageCubit extends BaseCubit<SearchPageState> {
     if (query.trim().isEmpty) return;
 
     await makeErrorHandledCall(() async {
-      emit(state.copyWith(
-        status: SearchPageStatus.loading,
-        people: [],
-      ));
+      emit(state.copyWith(status: SearchPageStatus.loading));
+
+      await Future.delayed(Duration(seconds: Random().nextInt(5)));
 
       final people = await _tickerService.getPeople(query);
       emit(state.copyWith(
